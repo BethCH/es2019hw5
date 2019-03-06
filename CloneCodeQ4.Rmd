@@ -1,0 +1,51 @@
+---
+title: "Clone Code"
+author: "Beth Clifton Holcomb"
+date: "3/5/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+I selected Kevin Soo's National Park repo to copy because i was looking for something on an interesting topic that i wouldn't struggle to understand. his code is well documented if not a bit overly noted. it seems to be a story or assignment but for this purpose, i am able to clone and explain without too much trouble. 
+there are a couple objectives the chunks are designed to show results for:
+
+1. get visitor totals by year for all the parks
+2. select the top 10 visited parks
+3. graphing the increase in visitation
+4. increase of visitation by percentage 
+5. plotting visitation since 1916 for the top 10 visited parks
+6. plotting visitation by percentage of total visitors 
+7. area per visitor to each park
+
+here is the first chunk as an example: 
+
+This code chunk results in total visitors to each park each year data is available. it also picks the 10 parks with the highest visitiation 
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+
+# load packages
+library(tidyverse)
+library(ggthemes)
+library(cowplot)
+library(ggrepel)
+
+# load data
+load("parkVisits.Rda")
+
+# get total by year
+totals <- parks %>% group_by(Year) %>%
+    summarise(YearTotal = sum(Visitors))
+
+# merge
+parks <- inner_join(parks, totals)
+parks <- parks %>% mutate(Share = Visitors/YearTotal)
+
+# get top 10 parks
+parkTotals <- parks %>%
+    filter(Year==2016) %>%
+    arrange(-Visitors)
+top10 <- parkTotals$ShortName[1:10]
+```
+
