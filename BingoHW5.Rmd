@@ -1,0 +1,31 @@
+---
+title: "BingoQ"
+author: "Beth Clifton Holcomb"
+date: "3/5/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Make a Bingo Card
+
+```{r}
+install.packages("devtools")
+devtools::install_github("jennybc/bingo")
+```
+
+```{r}
+library(bingo)
+
+## see some of the SuperBowl 50 squares
+tail(get_topic("football"))
+
+## make 8 bingo cards (SuperBowl 50 is current default)
+bc <- bingo(8)
+
+## print them to PDF
+plot(bc)
+```
+
